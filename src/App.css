@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+body {
+  background: #ecf0f1;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -32,7 +36,12 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+h1 {
+  padding-top: 2em;
 }

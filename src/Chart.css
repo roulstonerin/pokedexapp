@@ -1,0 +1,45 @@
+/*Pokemon Card Styling*/
+.Typography {
+    margin: 0;
+    padding: 0;
+}
+
+.pokemon-card {
+    border: 25px solid #F5DA16;
+    border-radius: 2em;
+}
+
+.pokemon-name {
+    font-weight: bold;
+    float: right;
+}
+
+.pokemon-hp {
+    font-weight: bold;
+    float: right;
+}
+
+.hp {
+    font-weight: bold;
+    font-size: small;
+    display: inline-block;
+}
+
+.hp-value {
+    display: inline-block;
+}
+
+.pokemon-image {
+    text-align: center;
+    border: 5px solid rgb(233, 200, 10);
+}
+
+.pokemon-image-description {
+    text-align: center;
+    font-size: small;
+    background-color: rgb(233, 200, 10);
+}
+
+#modal-title {
+    display: flex;
+}
