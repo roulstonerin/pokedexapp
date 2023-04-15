@@ -1,47 +1,33 @@
-.App {
-  text-align: center;
-}
-
 body {
   background: #ecf0f1;
+  /* Hide scrollbar */
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#padding {
+  padding: 65px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+.filter-type {
+  padding: 50px;
+}
+
+
+/* Make sure that chart stays in the center as screen decreases in size */
+@media (max-width: 1300px) {
+  .Box {
+    padding: 5;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
+@media (max-width: 1000px) {
+  .Box {
+    padding: 5;
   }
 }
 
-h1 {
-  padding-top: 2em;
+@media (max-width: 600px) {
+  .Box {
+    padding: 5;
+  }
 }

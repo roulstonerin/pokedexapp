@@ -1,0 +1,21 @@
+/* Make sure that filter bar doesn't cover pokeball as screen decreases in size */
+@media (max-width: 1300px) {
+    .FormControl {
+        padding-bottom:
+            800px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .FormControl {
+        padding-bottom:
+            800px;
+    }
+}
+
+@media (max-width: 600px) {
+    .FormControl {
+        padding-bottom:
+            800px;
+    }
+}

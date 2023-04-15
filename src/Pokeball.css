@@ -7,17 +7,40 @@
 }
 
 .pokeball-placement {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -150%);
+    position: fixed;
+    top: 183px;
+    left: 45%;
 }
 
-/* Styling the pokeball: Inspo/Creds to https://codepen.io/raubaca/pen/obaZmG */
+.pokeball-placement.clicked {
+    animation: shake 1.25s;
+}
+
+/* Make sure that pokeball stays in the center as screen decreases in size */
+@media (max-width: 1300px) {
+    .pokeball-placement {
+        left: 40%;
+    }
+}
+
+@media (max-width: 1000px) {
+    .pokeball-placement {
+        left: 35%;
+    }
+}
+
+@media (max-width: 600px) {
+    .pokeball-placement {
+        left: 30%;
+    }
+}
+
+/* Styling the pokeball (Inspo from https://codepen.io/raubaca/pen/obaZmG) */
 .pokeball {
     position: relative;
     width: 200px;
     height: 200px;
+    cursor: pointer;
     background: #fff;
     border: 10px solid #000;
     border-radius: 50%;
@@ -25,13 +48,6 @@
     box-shadow: inset -10px 10px 0 10px #ccc;
     animation: fall .25s ease-in-out,
         shake 1.25s cubic-bezier(.36, .07, .19, .97) 3;
-}
-
-.pokeball-click {
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    animation: shake 1.25s cubic-bezier(.36, .07, .19, .97) 3;
 }
 
 .pokeball::before,
@@ -55,7 +71,7 @@
     background: #000;
 }
 
-.pokeball__button {
+.pokeball-button {
     position: absolute;
     top: calc(50% - 30px);
     left: calc(50% - 30px);
@@ -64,10 +80,11 @@
     background: #7f8c8d;
     border: 10px solid #fff;
     border-radius: 50%;
-    z-index: 10;
+    z-index: 1;
     box-shadow: 0 0 0 10px black;
     animation: blink .5s alternate 7;
 }
+
 
 /* Pokeball Animations */
 @keyframes blink {
@@ -80,40 +97,31 @@
     }
 }
 
-
 @keyframes shake {
-
     0% {
-        position: sticky;
         transform: translate(0, 0) rotate(0);
     }
 
     20% {
-        position: sticky;
         transform: translate(-10px, 0) rotate(-20deg);
     }
 
     30% {
-        position: sticky;
         transform: translate(10px, 0) rotate(20deg);
     }
 
     50% {
-        position: sticky;
         transform: translate(-10px, 0) rotate(-10deg);
     }
 
     60% {
-        position: sticky;
         transform: translate(10px, 0) rotate(10deg);
     }
 
     100% {
-        position: sticky;
         transform: translate(0, 0) rotate(0);
     }
 }
-
 
 @keyframes fall {
     0% {

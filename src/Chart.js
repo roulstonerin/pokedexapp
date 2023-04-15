@@ -1,14 +1,10 @@
 import * as React from 'react';
 import { Box, IconButton, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
-//import { Close } from '@material-ui/icons';
 import CloseIcon from '@mui/icons-material/Close';
-
 
 import './Chart.css';
 
-
-//table columns
-const columns = [
+const pokemonPropertyTableColumns = [
     { id: 'photo', label: 'Photo', minWidth: 50 },
     { id: 'id', label: 'ID', minWidth: 50 },
     { id: 'name', label: 'Name', minWidth: 100 },
@@ -39,11 +35,13 @@ const columns = [
     }
 ];
 
+//This does nothing for now until I can get my data! :) 
 function createData(photo, id, name, types, hp, attack, defense, speed) {
     //const density = population / size;
     return { photo, id, name, types, hp, attack, defense, speed };
 }
 
+//Dummy Data! 
 const rows = [
     createData('India', 'IN', 1324171354, 3287263, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
     createData('China', 'CN', 1403500365, 9596961, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
@@ -62,10 +60,7 @@ const rows = [
     createData('Brazil', 'BR', 210147125, 8515767, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
 ];
 
-
-
 export default function Chart() {
-
     //Track the current page, rows per page, and selected row
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -90,100 +85,95 @@ export default function Chart() {
         setOpen(false);
     };
 
-    //Make Pokeball shake when clicked
-    const handleClick = () => {
-        const pokeballButton = document.getElementById("pokeball");
-        pokeballButton.classList.add("pokeball-click");
-        setTimeout(() => {
-            pokeballButton.classList.remove("pokeball-click");
-        }, 2250);
-    };
 
     return (
-        <Box p={20}>
-            <div id="pokeball" onClick={handleClick}>
-                <div class="pokeball-placement" >
-                    <div class="pokeball" >
-                        <div class="pokeball__button" ></div>
-                    </div>
-                </div>
-            </div>
-            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                <TableContainer sx={{
-                    maxHeight: 440
+        <Paper sx={{ width: '100%', overflow: 'hidden', minWidth: 300 }}>
+            <TableContainer sx={{
+                maxHeight: 440
+            }}>
+                <Table stickyHeader aria-label="sticky table" sx={{ cursor: 'pointer', }}>
+
+                    <TableHead >
+                        <TableRow>
+
+                            {pokemonPropertyTableColumns.map((column) => (
+                                <TableCell
+                                    key={column.id}
+                                    align={column.align}
+                                    style={{ minWidth: column.minWidth }}
+                                >
+                                    {column.label}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    </TableHead>
+                    <TableBody >
+                        {rows
+                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                            .map((row) => {
+                                return (
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code} onClick={() => handleRowClick(row)}>
+                                        {pokemonPropertyTableColumns.map((column) => {
+                                            const value = row[column.id];
+                                            return (
+                                                <TableCell key={column.id} align={column.align}>
+                                                    {column.format && typeof value === 'number'
+                                                        ? column.format(value)
+                                                        : value}
+                                                </TableCell>
+                                            );
+                                        })}
+                                    </TableRow>
+                                );
+                            })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onPageChange={handleChangePage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+            <Modal open={open} onClose={handleClose} >
+                <Box className="pokemon-card" sx={{
+                    position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, height: '65%'
                 }}>
-                    <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{ minWidth: column.minWidth }}
-                                    >
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {rows
-                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} onClick={() => handleRowClick(row)}>
-                                            {columns.map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number'
-                                                            ? column.format(value)
-                                                            : value}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[10, 25, 100]}
-                    component="div"
-                    count={rows.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onPageChange={handleChangePage}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                />
-                <Modal open={open} onClose={handleClose}>
-                    <Box className="pokemon-card" sx={{
-                        position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, width: '25%', height: '65%'
+                    <Box sx={{
+                        display: 'flex', justifyContent: 'flex-end', mb: 1, display: "inline-block", position: 'absolute',
+                        left: '98%', top: '-8%', backgroundColor: '#E8E8E8', borderRadius: '30px'
                     }}>
-                        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mb: 1 }}>
-                            <IconButton onClick={handleClose}>
-                                <CloseIcon />
-                            </IconButton>
-                        </Box>
-                        <Typography variant="h5" id="modal-title" gutterBottom>
-                            <div class="pokemon-name"> {selectedRow && selectedRow[columns[2].id]}</div>
-                            <div class="pokemon-hp">
-                                <div class="hp">HP</div>
-                                <div class="hp-value"> {selectedRow && selectedRow[columns[4].id]}</div>
-                            </div>
-                            <div></div>
-                        </Typography>
-                        <div class="pokemon-image"> {selectedRow && selectedRow[columns[0].id]}</div>
-                        <div class="pokemon-image-description"> {selectedRow && selectedRow[columns[1].id]}</div>
-                        <p> types
-                            attack defense speed</p>
-
-
-
+                        <IconButton variant="outlined" onClick={handleClose} sx={{ color: 'black' }}>
+                            <CloseIcon />
+                        </IconButton>
                     </Box>
-                </Modal>
-            </Paper >
-        </Box >
+                    <Typography variant="h5" id="modal-title" gutterBottom>
+                        <div class="pokemon-name"> {selectedRow && selectedRow[pokemonPropertyTableColumns[2].id]}</div>
+                        <div class="pokemon-hp">
+                            <div class="hp">HP</div>
+                            <div class="hp-value"> {selectedRow && selectedRow[pokemonPropertyTableColumns[4].id]}</div>
+
+                        </div>
+                        <div></div>
+                    </Typography>
+                    <div class="pokemon-image"> {selectedRow && selectedRow[pokemonPropertyTableColumns[0].id]}</div>
+                    <div class="pokemon-image-description"> {selectedRow && selectedRow[pokemonPropertyTableColumns[1].id]}</div>
+                    <table class="card-items">
+                        <tbody>
+                            <tr>types</tr>
+                            <hr></hr>
+                            <tr id="attack">attack</tr>
+                            <hr></hr>
+                            <tr class="defense">defense</tr>
+                            <hr></hr>
+                            <tr class="speed">speed</tr>
+                        </tbody>
+                    </table>
+                </Box>
+            </Modal>
+        </Paper >
     );
 }
