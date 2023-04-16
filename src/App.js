@@ -1,25 +1,40 @@
+import { Box } from '@mui/material';
+import Grid from '@mui/material/Grid';
+
 import './App.css';
 import Chart from './Chart';
 import Pokeball from './Pokeball';
 import FilterType from './FilterType';
-import { Box } from '@mui/material';
-//20
+
+//<FilterType className="filter-type" />
 
 function App() {
   return (
     <div className="App">
       <div id="padding" />
       <Pokeball />
-      <Box p={20} sx={{
+      <Box sx={{
         '@media screen and (max-width: 1200px)': {
           pl: '30px', pr: '30px'
         },
 
       }}>
-        <FilterType className="filter-type" />
-        <Chart />
-
       </Box>
+      <Grid
+        container
+        spacing={30}
+        direction="column"
+        alignItems="center"
+        justifyContent="center"
+        style={{ minHeight: '100vh' }}
+      >
+
+        <Grid item xs={3}>
+          <FilterType />
+        </Grid>
+
+      </Grid>
+
 
     </div >
   );

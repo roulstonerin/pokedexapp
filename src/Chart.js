@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { Box, IconButton, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
+import { Box, FormControl, IconButton, Modal, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, Typography } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 
 import './Chart.css';
+
 
 const pokemonPropertyTableColumns = [
     { id: 'photo', label: 'Photo', minWidth: 50 },
@@ -34,8 +35,7 @@ const pokemonPropertyTableColumns = [
         format: (value) => value.toFixed(2),
     }
 ];
-
-export default function Chart() {
+export default function Chart({ selectedOption }) {
     const [isLoading, setLoading] = React.useState(true);
     const [pokemonData, setPokemonData] = React.useState([]);
 
@@ -51,6 +51,7 @@ export default function Chart() {
                 console.error(error);
             }
         }
+        fetchData();
     }, []);
 
     let rows = [];
@@ -68,6 +69,18 @@ export default function Chart() {
             });
         }
     }
+
+    const filteredRows = rows.filter((row) => {
+        if (selectedOption === "All Types") {
+            return row;
+        }
+        console.log(selectedOption);
+        if (!selectedOption) {
+            return true;
+        }
+        return row.types.includes(selectedOption);
+    });
+
 
     //Track the current page, rows per page, and selected row
     const [page, setPage] = React.useState(0);
@@ -95,93 +108,90 @@ export default function Chart() {
 
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden', minWidth: 300 }}>
-            <TableContainer sx={{
-                maxHeight: 440
-            }}>
-                <Table stickyHeader aria-label="sticky table" sx={{ cursor: 'pointer', }}>
-
-                    <TableHead >
-                        <TableRow>
-
-                            {pokemonPropertyTableColumns.map((column) => (
-                                <TableCell
-                                    key={column.id}
-                                    align={column.align}
-                                    style={{ minWidth: column.minWidth }}
-                                >
-                                    {column.label}
-                                </TableCell>
-                            ))}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody >
-                        {rows
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => {
-                                return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code} onClick={() => handleRowClick(row)}>
-                                        {pokemonPropertyTableColumns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <TableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
-                                                </TableCell>
-                                            );
-                                        })}
-                                    </TableRow>
-                                );
-                            })}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            <TablePagination
-                rowsPerPageOptions={[10, 25, 100]}
-                component="div"
-                count={rows.length}
-                rowsPerPage={rowsPerPage}
-                page={page}
-                onPageChange={handleChangePage}
-                onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-            <Modal open={open} onClose={handleClose} >
-                <Box className="pokemon-card" sx={{
-                    position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, height: '65%'
-                }}>
-                    <Box sx={{
-                        display: 'flex', justifyContent: 'flex-end', mb: 1, display: "inline-block", position: 'absolute',
-                        left: '98%', top: '-8%', backgroundColor: '#E8E8E8', borderRadius: '30px'
+        <div>
+            <FormControl>
+                <Paper sx={{ width: '100%', overflow: 'hidden', minWidth: 300 }}>
+                    <TableContainer sx={{
+                        maxHeight: 440
                     }}>
-                        <IconButton variant="outlined" onClick={handleClose} sx={{ color: 'black' }}>
-                            <CloseIcon />
-                        </IconButton>
-                    </Box>
-                    <Typography variant="h5" id="modal-title" gutterBottom>
-                        <div class="pokemon-name"> {selectedRow && selectedRow[pokemonPropertyTableColumns[2].id]}</div>
-                        <div class="pokemon-hp">
-                            <div class="hp">HP</div>
-                            <div class="hp-value"> {selectedRow && selectedRow[pokemonPropertyTableColumns[4].id]}</div>
-
-                        </div>
-                        <div></div>
-                    </Typography>
-                    <div class="pokemon-image"> {selectedRow && selectedRow[pokemonPropertyTableColumns[0].id]}</div>
-                    <div class="pokemon-image-description"> {selectedRow && selectedRow[pokemonPropertyTableColumns[1].id]}</div>
-                    <table class="card-items">
-                        <tbody>
-                            <tr>types:{selectedRow && selectedRow[pokemonPropertyTableColumns[3].id]}</tr>
-                            <hr></hr>
-                            <tr id="attack">attack: {selectedRow && selectedRow[pokemonPropertyTableColumns[5].id]}</tr>
-                            <hr></hr>
-                            <tr class="defense">defense: {selectedRow && selectedRow[pokemonPropertyTableColumns[6].id]}</tr>
-                            <hr></hr>
-                            <tr class="speed">speed: {selectedRow && selectedRow[pokemonPropertyTableColumns[7].id]}</tr>
-                        </tbody>
-                    </table>
-                </Box>
-            </Modal>
-        </Paper >
+                        <Table stickyHeader aria-label="sticky table" sx={{ cursor: 'pointer', }}>
+                            <TableHead >
+                                <TableRow>
+                                    {pokemonPropertyTableColumns.map((column) => (
+                                        <TableCell
+                                            key={column.id}
+                                            align={column.align}
+                                            style={{ minWidth: column.minWidth }}
+                                        >
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                    return (
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                                            {pokemonPropertyTableColumns.map((column) => {
+                                                const value = row[column.id];
+                                                return (
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        {column.format && typeof value === "number" ? column.format(value) : value}
+                                                    </TableCell>
+                                                );
+                                            })}
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[10, 25, 100]}
+                        component="div"
+                        count={rows.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onPageChange={handleChangePage}
+                        onRowsPerPageChange={handleChangeRowsPerPage}
+                    />
+                    <Modal open={open} onClose={handleClose} >
+                        <Box className="pokemon-card" sx={{
+                            position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', bgcolor: 'background.paper', boxShadow: 24, p: 4, height: '65%', width: '400px'
+                        }}>
+                            <Box sx={{
+                                display: 'flex', justifyContent: 'flex-end', mb: 1, display: "inline-block", position: 'absolute',
+                                left: '98%', top: '-8%', backgroundColor: '#E8E8E8', borderRadius: '30px'
+                            }}>
+                                <IconButton variant="outlined" onClick={handleClose} sx={{ color: 'black' }}>
+                                    <CloseIcon />
+                                </IconButton>
+                            </Box>
+                            <Typography variant="h5" gutterBottom>
+                                <div class="pokemon-name">{selectedRow && selectedRow[pokemonPropertyTableColumns[2].id]}</div>
+                                <div class="pokemon-hp">
+                                    <div class="hp">HP</div>
+                                    <div class="hp-value">{selectedRow && selectedRow[pokemonPropertyTableColumns[4].id]}</div>
+                                </div>
+                                <div></div>
+                            </Typography>
+                            <div class="pokemon-image"> {selectedRow && selectedRow[pokemonPropertyTableColumns[0].id]}</div>
+                            <div class="pokemon-image-description">ID: {selectedRow && selectedRow[pokemonPropertyTableColumns[1].id]}</div>
+                            <table class="card-items">
+                                <tbody class="card-items">
+                                    <tr class="card-items">types: {selectedRow && selectedRow[pokemonPropertyTableColumns[3].id]}</tr>
+                                    {/* <hr></hr> */}
+                                    <tr class="card-items">attack: {selectedRow && selectedRow[pokemonPropertyTableColumns[5].id]}</tr>
+                                    {/* <hr></hr> */}
+                                    <tr class="card-items">defense: {selectedRow && selectedRow[pokemonPropertyTableColumns[6].id]}</tr>
+                                    {/* <hr></hr> */}
+                                    <tr class="card-items">speed: {selectedRow && selectedRow[pokemonPropertyTableColumns[7].id]}</tr>
+                                </tbody>
+                            </table>
+                        </Box>
+                    </Modal>
+                </Paper >
+            </FormControl>
+        </div >
     );
 }
