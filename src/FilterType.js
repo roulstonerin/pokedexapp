@@ -63,26 +63,26 @@ export default function FilterType() {
         <FormControlUnstyled sx={{
             borderRadius: 2,
             backgroundColor: "white",
-            label: "Filter By Type",
+            //label: "Filter By Type",
         }}>
-            <InputLabel id="select-type-label">Filter By Type</InputLabel>
-            <ThemeProvider theme={theme}>
+            <InputLabel id="select-type-label" >Filter By Type</InputLabel>
+            {/* <ThemeProvider theme={theme}> */}
 
-                <Select
-                    labelId="select-type-label"
-                    value={pokemonType}
-                    onChange={handleChange}
-                    label="Filter By Type"
-                    sx={{ width: '30%', backgroundColor: 'white', borderRadius: 9, }}
-                >
-                    {typeOptions.map((option) => (
-                        <MenuItem key={option} value={option}>
-                            {option}
-                        </MenuItem>
-                    ))}
-                </Select>
+            <Select
+                labelId="select-type-label"
+                value={pokemonType}
+                onChange={handleChange}
+                //label="Filter By Type"
+                sx={{ width: '30%', backgroundColor: 'white', borderRadius: 9, }}
+            >
+                {typeOptions.map((option) => (
+                    <MenuItem key={option} value={option}>
+                        {option}
+                    </MenuItem>
+                ))}
+            </Select>
 
-            </ThemeProvider>
+            {/* </ThemeProvider> */}
             {pokemonType && (
                 <Box sx={{ marginTop: '20px' }}>
                     <Chart selectedOption={pokemonType} />

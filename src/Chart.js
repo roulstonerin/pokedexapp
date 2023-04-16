@@ -74,12 +74,9 @@ export default function Chart({ selectedOption }) {
         if (selectedOption === "All Types") {
             return row;
         }
-        console.log(selectedOption);
-        if (!selectedOption) {
-            return true;
-        }
         return row.types.includes(selectedOption);
     });
+
 
 
     //Track the current page, rows per page, and selected row
@@ -149,7 +146,7 @@ export default function Chart({ selectedOption }) {
                     <TablePagination
                         rowsPerPageOptions={[10, 25, 100]}
                         component="div"
-                        count={rows.length}
+                        count={filteredRows.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
