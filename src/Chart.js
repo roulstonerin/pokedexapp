@@ -35,32 +35,40 @@ const pokemonPropertyTableColumns = [
     }
 ];
 
-//This does nothing for now until I can get my data! :) 
-function createData(photo, id, name, types, hp, attack, defense, speed) {
-    //const density = population / size;
-    return { photo, id, name, types, hp, attack, defense, speed };
-}
-
-//Dummy Data! 
-const rows = [
-    createData('India', 'IN', 1324171354, 3287263, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('China', 'CN', 1403500365, 9596961, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Italy', 'IT', 60483973, 301340, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('United States', 'US', 327167434, 9833520, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Canada', 'CA', 37602103, 9984670, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Australia', 'AU', 25475400, 7692024, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Germany', 'DE', 83019200, 357578, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Ireland', 'IE', 4857000, 70273, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Mexico', 'MX', 126577691, 1972550, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Japan', 'JP', 126317000, 377973, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('France', 'FR', 67022000, 640679, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('United Kingdom', 'GB', 67545757, 242495, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Russia', 'RU', 146793744, 17098246, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Nigeria', 'NG', 200962417, 923768, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-    createData('Brazil', 'BR', 210147125, 8515767, 'Cheese', 'Biscuits', 'Pizza', 'Flowers'),
-];
-
 export default function Chart() {
+    const [isLoading, setLoading] = React.useState(true);
+    const [pokemonData, setPokemonData] = React.useState([]);
+
+    React.useEffect(() => {
+        async function fetchData() {
+            try {
+                const response = await fetch('http://localhost:5000/api/data');
+                const data = await response.json();
+
+                setPokemonData(data);
+                setLoading(false);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }, []);
+
+    let rows = [];
+    if (pokemonData.length > 0) {
+        for (let i = 0; i < pokemonData.length; i++) {
+            rows.push({
+                photo: 'photo placeholder',
+                id: pokemonData[i]["id"],
+                name: pokemonData[i]["name"]["english"],
+                types: pokemonData[i]["type"].join(', '),
+                hp: pokemonData[i]["base"]["HP"],
+                attack: pokemonData[i]["base"]["Sp. Attack"],
+                defense: pokemonData[i]["base"]["Sp. Defense"],
+                speed: pokemonData[i]["base"]["Speed"]
+            });
+        }
+    }
+
     //Track the current page, rows per page, and selected row
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -163,13 +171,13 @@ export default function Chart() {
                     <div class="pokemon-image-description"> {selectedRow && selectedRow[pokemonPropertyTableColumns[1].id]}</div>
                     <table class="card-items">
                         <tbody>
-                            <tr>types</tr>
+                            <tr>types:{selectedRow && selectedRow[pokemonPropertyTableColumns[3].id]}</tr>
                             <hr></hr>
-                            <tr id="attack">attack</tr>
+                            <tr id="attack">attack: {selectedRow && selectedRow[pokemonPropertyTableColumns[5].id]}</tr>
                             <hr></hr>
-                            <tr class="defense">defense</tr>
+                            <tr class="defense">defense: {selectedRow && selectedRow[pokemonPropertyTableColumns[6].id]}</tr>
                             <hr></hr>
-                            <tr class="speed">speed</tr>
+                            <tr class="speed">speed: {selectedRow && selectedRow[pokemonPropertyTableColumns[7].id]}</tr>
                         </tbody>
                     </table>
                 </Box>

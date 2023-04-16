@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import { ThemeProvider, createMuiTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import './FilterType.css';
 
@@ -34,7 +34,7 @@ export default function FilterType() {
         setPokemonType(event.target.value);
     };
 
-    const theme = createMuiTheme({
+    const theme = createTheme({
         palette: {
             primary: {
                 main: '#2a75bb',
