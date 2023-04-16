@@ -54,18 +54,30 @@ export default function Chart({ selectedOption }) {
         fetchData();
     }, []);
 
+
+
     let rows = [];
     if (pokemonData.length > 0) {
         for (let i = 0; i < pokemonData.length; i++) {
+            if (pokemonData[i].id < 10) {
+                var url = "00" + pokemonData[i]["id"].toString();
+            } else if (pokemonData[i].id < 100) {
+                var url = "0" + pokemonData[i]["id"].toString();
+            } else { //is < 1000
+                var url = pokemonData[i]["id"].toString();
+            }
+
             rows.push({
-                photo: 'photo placeholder',
+                // photo: pokemonData[i]["photo"],
+                //photo: "placeholder",
+                photo: `https://github.com/fanzeyi/pokemon.json/raw/master/images/${url}.png`,
                 id: pokemonData[i]["id"],
                 name: pokemonData[i]["name"]["english"],
                 types: pokemonData[i]["type"].join(', '),
                 hp: pokemonData[i]["base"]["HP"],
                 attack: pokemonData[i]["base"]["Sp. Attack"],
-                defense: pokemonData[i]["base"]["Sp. Defense"],
-                speed: pokemonData[i]["base"]["Speed"]
+                defense: Math.round(pokemonData[i]["base"]["Sp. Defense"]),
+                speed: Math.round(pokemonData[i]["base"]["Speed"])
             });
         }
     }
@@ -114,6 +126,7 @@ export default function Chart({ selectedOption }) {
                         <Table stickyHeader aria-label="sticky table" sx={{ cursor: 'pointer', }}>
                             <TableHead >
                                 <TableRow>
+
                                     {pokemonPropertyTableColumns.map((column) => (
                                         <TableCell
                                             key={column.id}
@@ -129,7 +142,15 @@ export default function Chart({ selectedOption }) {
                                 {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
-                                            {pokemonPropertyTableColumns.map((column) => {
+                                            {pokemonPropertyTableColumns.slice(0, 1).map((column) => {
+                                                const value = row[column.id];
+                                                return (
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        <img className="thumbnail" src={row.photo} />
+                                                    </TableCell>
+                                                );
+                                            })}
+                                            {pokemonPropertyTableColumns.slice(1).map((column) => {
                                                 const value = row[column.id];
                                                 return (
                                                     <TableCell key={column.id} align={column.align}>
@@ -140,6 +161,22 @@ export default function Chart({ selectedOption }) {
                                         </TableRow>
                                     );
                                 })}
+
+
+                                {/* {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                    return (
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
+                                            {pokemonPropertyTableColumns.map((column) => {
+                                                const value = row[column.id];
+                                                return (
+                                                    <TableCell key={column.id} align={column.align}>
+                                                        {column.format && typeof value === "number" ? column.format(value) : value}
+                                                    </TableCell>
+                                                );
+                                            })}
+                                        </TableRow>
+                                    );
+                                })} */}
                             </TableBody>
                         </Table>
                     </TableContainer>
