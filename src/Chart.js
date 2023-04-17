@@ -119,9 +119,15 @@ export default function Chart({ selectedOption }) {
             <FormControl>
                 <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                     <TableContainer sx={{
-                        maxHeight: 440
+                        maxHeight: '28rem',
+                        width: 1000,
+                        overflow: "auto",
                     }}>
-                        <Table stickyHeader aria-label="sticky table" sx={{ cursor: 'pointer', }}>
+                        <Table stickyHeader aria-label="sticky table"
+                            sx={{
+                                cursor: 'pointer',
+                                minWidth: 100,
+                            }}>
                             <TableHead >
                                 <TableRow>
 

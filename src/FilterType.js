@@ -64,8 +64,11 @@ export default function FilterType() {
                 onChange={handleChange}
                 sx={{
                     width: '30%', backgroundColor: 'white', borderRadius: 9,
-                    '@media screen and (max-width: 1300px)': {
+                    '@media screen and (max-width: 900px)': {
                         width: '25%'
+                    },
+                    '@media screen and (max-width: 700px)': {
+                        width: '15%'
                     },
 
 

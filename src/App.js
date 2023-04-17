@@ -23,7 +23,7 @@ function App() {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: '150vh' }}
+        style={{ minHeight: '84em' }}
       >
 
         <Grid item xs={3}>
