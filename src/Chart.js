@@ -198,13 +198,13 @@ export default function Chart({ selectedOption }) {
                                 <div></div>
                             </Typography>
                             <div class="pokemon-image"><img className="modal-photo" src={selectedRow && selectedRow[pokemonPropertyTableColumns[0].id]} /></div>
-                            <div class="pokemon-image-description">ID: {selectedRow && selectedRow[pokemonPropertyTableColumns[1].id]}</div>
-                            <table class="card-items">
+                            <div class="pokemon-image-id">ID: {selectedRow && selectedRow[pokemonPropertyTableColumns[1].id]}</div>
+                            <table class="card-details">
                                 <tbody class="card-items">
-                                    <tr class="card-items">type: {selectedRow && selectedRow[pokemonPropertyTableColumns[3].id]}</tr>
-                                    <tr class="card-items">attack: {selectedRow && selectedRow[pokemonPropertyTableColumns[5].id]}</tr>
-                                    <tr class="card-items">defense: {selectedRow && selectedRow[pokemonPropertyTableColumns[6].id]}</tr>
-                                    <tr class="card-items">speed: {selectedRow && selectedRow[pokemonPropertyTableColumns[7].id]}</tr>
+                                    <tr class="card-items"><b>type:</b> {selectedRow && selectedRow[pokemonPropertyTableColumns[3].id]}</tr>
+                                    <tr class="card-items"><b>attack:</b> {selectedRow && selectedRow[pokemonPropertyTableColumns[5].id]}</tr>
+                                    <tr class="card-items"><b>defense:</b>  {selectedRow && selectedRow[pokemonPropertyTableColumns[6].id]}</tr>
+                                    <tr class="card-items"><b>speed:</b>  {selectedRow && selectedRow[pokemonPropertyTableColumns[7].id]}</tr>
                                 </tbody>
                             </table>
                         </Box>

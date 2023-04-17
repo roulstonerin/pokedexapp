@@ -41,12 +41,17 @@
 
 }
 
-.pokemon-image-description {
+.pokemon-image-id {
     text-align: center;
     font-size: small;
     background-color: #F5DA16;
     border: 3px solid #F5DA16;
+    font-weight: 700;
 
+}
+
+.card-details {
+    padding-top: 30px;
 }
 
 .card-items {
