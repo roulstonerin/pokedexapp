@@ -26,13 +26,13 @@ const pokemonPropertyTableColumns = [
         id: 'defense',
         label: 'Defense',
         minWidth: 50,
-        format: (value) => value.toFixed(2),
+        format: (value) => value.toLocaleString('en-US'),
     },
     {
         id: 'speed',
         label: 'Speed',
         minWidth: 50,
-        format: (value) => value.toFixed(2),
+        format: (value) => value.toLocaleString('en-US'),
     }
 ];
 export default function Chart({ selectedOption }) {
@@ -74,8 +74,8 @@ export default function Chart({ selectedOption }) {
                 types: pokemonData[i]["type"].join(', '),
                 hp: pokemonData[i]["base"]["HP"],
                 attack: pokemonData[i]["base"]["Sp. Attack"],
-                defense: Math.round(pokemonData[i]["base"]["Sp. Defense"]),
-                speed: Math.round(pokemonData[i]["base"]["Speed"])
+                defense: pokemonData[i]["base"]["Sp. Defense"],
+                speed: pokemonData[i]["base"]["Speed"]
             });
         }
     }
@@ -117,7 +117,7 @@ export default function Chart({ selectedOption }) {
     return (
         <div>
             <FormControl>
-                <Paper sx={{ width: '100%', overflow: 'hidden', minWidth: 300 }}>
+                <Paper sx={{ width: '100%', overflow: 'hidden' }}>
                     <TableContainer sx={{
                         maxHeight: 440
                     }}>

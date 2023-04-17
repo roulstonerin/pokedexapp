@@ -62,7 +62,14 @@ export default function FilterType() {
                 labelId="select-type-label"
                 value={pokemonType}
                 onChange={handleChange}
-                sx={{ width: '30%', backgroundColor: 'white', borderRadius: 9, }}
+                sx={{
+                    width: '30%', backgroundColor: 'white', borderRadius: 9,
+                    '@media screen and (max-width: 1300px)': {
+                        width: '25%'
+                    },
+
+
+                }}
             >
                 {typeOptions.map((option) => (
                     <MenuItem key={option} value={option}>
