@@ -214,3 +214,4 @@ export default function Chart({ selectedOption }) {
         </div >
     );
 }
+

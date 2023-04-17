@@ -6,11 +6,8 @@ import './FilterType.css';
 import Chart from './Chart.js';
 
 
-
 export default function FilterType() {
-    const [isLoading, setLoading] = React.useState(true);
     const [pokemonData, setPokemonData] = React.useState([]);
-
 
     React.useEffect(() => {
         async function fetchData() {
@@ -19,7 +16,6 @@ export default function FilterType() {
                 const data = await response.json();
 
                 setPokemonData(data);
-                setLoading(false);
             } catch (error) {
                 console.error(error);
             }
@@ -40,7 +36,6 @@ export default function FilterType() {
 
     let typeOptions = Array.from(PokemonTypeOptions);
     typeOptions.unshift("All Types");
-    console.log(typeOptions);
 
     const [pokemonType, setPokemonType] = React.useState(typeOptions[0]);
 
@@ -51,7 +46,6 @@ export default function FilterType() {
 
 
     return (
-
         <FormControlUnstyled sx={{
             borderRadius: 2,
             backgroundColor: "white",
@@ -70,8 +64,6 @@ export default function FilterType() {
                     '@media screen and (max-width: 700px)': {
                         width: '15%'
                     },
-
-
                 }}
             >
                 {typeOptions.map((option) => (
@@ -89,3 +81,4 @@ export default function FilterType() {
         </FormControlUnstyled>
     );
 }
+

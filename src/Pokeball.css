@@ -85,7 +85,6 @@
     animation: blink .5s alternate 7;
 }
 
-
 /* Pokeball Animations */
 @keyframes blink {
     from {
