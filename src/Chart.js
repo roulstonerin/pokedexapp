@@ -68,8 +68,6 @@ export default function Chart({ selectedOption }) {
             }
 
             rows.push({
-                // photo: pokemonData[i]["photo"],
-                //photo: "placeholder",
                 photo: `https://github.com/fanzeyi/pokemon.json/raw/master/images/${url}.png`,
                 id: pokemonData[i]["id"],
                 name: pokemonData[i]["name"]["english"],
@@ -161,22 +159,6 @@ export default function Chart({ selectedOption }) {
                                         </TableRow>
                                     );
                                 })}
-
-
-                                {/* {filteredRows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                                    return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.id} onClick={() => handleRowClick(row)}>
-                                            {pokemonPropertyTableColumns.map((column) => {
-                                                const value = row[column.id];
-                                                return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === "number" ? column.format(value) : value}
-                                                    </TableCell>
-                                                );
-                                            })}
-                                        </TableRow>
-                                    );
-                                })} */}
                             </TableBody>
                         </Table>
                     </TableContainer>
@@ -209,16 +191,13 @@ export default function Chart({ selectedOption }) {
                                 </div>
                                 <div></div>
                             </Typography>
-                            <div class="pokemon-image"> {selectedRow && selectedRow[pokemonPropertyTableColumns[0].id]}</div>
+                            <div class="pokemon-image"><img className="modal-photo" src={selectedRow && selectedRow[pokemonPropertyTableColumns[0].id]} /></div>
                             <div class="pokemon-image-description">ID: {selectedRow && selectedRow[pokemonPropertyTableColumns[1].id]}</div>
                             <table class="card-items">
                                 <tbody class="card-items">
-                                    <tr class="card-items">types: {selectedRow && selectedRow[pokemonPropertyTableColumns[3].id]}</tr>
-                                    {/* <hr></hr> */}
+                                    <tr class="card-items">type: {selectedRow && selectedRow[pokemonPropertyTableColumns[3].id]}</tr>
                                     <tr class="card-items">attack: {selectedRow && selectedRow[pokemonPropertyTableColumns[5].id]}</tr>
-                                    {/* <hr></hr> */}
                                     <tr class="card-items">defense: {selectedRow && selectedRow[pokemonPropertyTableColumns[6].id]}</tr>
-                                    {/* <hr></hr> */}
                                     <tr class="card-items">speed: {selectedRow && selectedRow[pokemonPropertyTableColumns[7].id]}</tr>
                                 </tbody>
                             </table>

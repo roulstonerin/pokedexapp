@@ -3,30 +3,3 @@ body {
   /* Hide scrollbar */
   overflow: hidden;
 }
-
-
-
-.filter-type {
-  padding: 50px;
-
-}
-
-
-/* Make sure that chart stays in the center as screen decreases in size */
-@media (max-width: 1300px) {
-  .Box {
-    padding: 5;
-  }
-}
-
-@media (max-width: 1000px) {
-  .Box {
-    padding: 5;
-  }
-}
-
-@media (max-width: 600px) {
-  .Box {
-    padding: 5;
-  }
-}

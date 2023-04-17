@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Box, InputLabel, MenuItem, Select } from '@mui/material';
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import FormControlUnstyled from '@mui/base/FormControlUnstyled';
 
 import './FilterType.css';
@@ -51,28 +50,18 @@ export default function FilterType() {
     };
 
 
-    const theme = createTheme({
-        palette: {
-            primary: {
-                main: '#2a75bb',
-            },
-        }
-    });
     return (
 
         <FormControlUnstyled sx={{
             borderRadius: 2,
             backgroundColor: "white",
-            //label: "Filter By Type",
         }}>
             <InputLabel id="select-type-label" >Filter By Type</InputLabel>
-            {/* <ThemeProvider theme={theme}> */}
 
             <Select
                 labelId="select-type-label"
                 value={pokemonType}
                 onChange={handleChange}
-                //label="Filter By Type"
                 sx={{ width: '30%', backgroundColor: 'white', borderRadius: 9, }}
             >
                 {typeOptions.map((option) => (
@@ -82,7 +71,6 @@ export default function FilterType() {
                 ))}
             </Select>
 
-            {/* </ThemeProvider> */}
             {pokemonType && (
                 <Box sx={{ marginTop: '20px' }}>
                     <Chart selectedOption={pokemonType} />

@@ -1,5 +1,4 @@
 /*Pokemon Card Styling*/
-
 .Typography {
     margin: 0;
     padding: 0;
@@ -46,12 +45,19 @@
     text-align: center;
     font-size: small;
     background-color: #F5DA16;
+    border: 3px solid #F5DA16;
 
 }
 
 .card-items {
     display: block;
     font-weight: 400;
-    margin-top: 70px;
+    margin-top: 18px;
 
+}
+
+.modal-photo {
+    height: 220px;
+    width: 220x;
+    padding: 10px;
 }
