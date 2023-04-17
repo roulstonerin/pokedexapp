@@ -23,7 +23,10 @@ function App() {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        style={{ minHeight: '84em' }}
+        style={{
+          minHeight: '84em', overflowX: 'scroll',
+          paddingLeft: '2em', paddingRight: '2em',
+        }}
       >
 
         <Grid item xs={3}>

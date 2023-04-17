@@ -1,5 +1,5 @@
 body {
   background: #ecf0f1;
-  /* Hide scrollbar */
-  overflow: hidden;
+  /* show scrollbar for iPhone SE */
+  /* overflow: hidden; */
 }
